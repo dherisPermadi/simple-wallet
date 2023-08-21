@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_08_20_214649) do
+ActiveRecord::Schema[7.0].define(version: 2023_08_21_035032) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -56,12 +56,53 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_20_214649) do
     t.index ["uid"], name: "index_oauth_applications_on_uid", unique: true
   end
 
+  create_table "transaction_details", force: :cascade do |t|
+    t.bigint "wallet_transaction_id"
+    t.bigint "wallet_id"
+    t.string "transaction_type", null: false
+    t.decimal "amount", precision: 8
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["wallet_id"], name: "index_transaction_details_on_wallet_id"
+    t.index ["wallet_transaction_id"], name: "index_transaction_details_on_wallet_transaction_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "username", default: "", null: false
     t.datetime "remember_created_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["username"], name: "index_users_on_username", unique: true
+  end
+
+  create_table "wallet_deposits", force: :cascade do |t|
+    t.bigint "wallet_id"
+    t.decimal "amount", precision: 8
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["wallet_id"], name: "index_wallet_deposits_on_wallet_id"
+  end
+
+  create_table "wallet_transactions", force: :cascade do |t|
+    t.string "sourceable_type"
+    t.bigint "sourceable_id"
+    t.string "targetable_type"
+    t.bigint "targetable_id"
+    t.decimal "amount", precision: 15
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["sourceable_id", "sourceable_type"], name: "index_wallet_transactions_on_sourceable_id_and_sourceable_type"
+    t.index ["sourceable_type", "sourceable_id"], name: "index_wallet_transactions_on_sourceable"
+    t.index ["targetable_id", "targetable_type"], name: "index_wallet_transactions_on_targetable_id_and_targetable_type"
+    t.index ["targetable_type", "targetable_id"], name: "index_wallet_transactions_on_targetable"
+  end
+
+  create_table "wallets", force: :cascade do |t|
+    t.bigint "user_id"
+    t.decimal "balance", precision: 20, default: "0"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_wallets_on_user_id"
   end
 
   add_foreign_key "oauth_access_grants", "oauth_applications", column: "application_id"

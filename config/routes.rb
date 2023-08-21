@@ -12,6 +12,9 @@ Rails.application.routes.draw do
   namespace :api, defaults: { format: :json } do
     namespace :v1 do
       devise_for :users, controllers: { registrations: 'api/v1/registrations' }
+      resources :wallet_deposits, only: %i[create]
+
+      get '/wallet/total_balance', to: 'wallets#total_balance', as: 'total_balance'
     end
   end
 end

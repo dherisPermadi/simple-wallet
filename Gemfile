@@ -8,6 +8,7 @@ gem "bootsnap", require: false
 gem 'devise', '~> 4.8', '>= 4.8.1'
 gem 'dotenv-rails', '~> 2.8.1'
 gem 'doorkeeper', '~> 5.5', '>= 5.5.4'
+gem 'enumerize'
 gem 'pg', '~> 1.1'
 gem "puma", "~> 5.0"
 gem "rails", "~> 7.0.7"
