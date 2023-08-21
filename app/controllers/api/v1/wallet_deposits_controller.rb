@@ -8,7 +8,7 @@ module Api
         @topup = WalletDeposit.new(wallet_params.merge({ wallet_id: @wallet.id }))
 
         if @topup.save
-          render json: { response: 'Topup successful' }
+          render json: { response: 'Topup successful' }, status: 204
         else
           render json: { response: 'Invalid topup amount' }, status: 400
         end

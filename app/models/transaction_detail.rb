@@ -1,20 +1,19 @@
-class WalletTransaction < ApplicationRecord
+class TransactionDetail < ApplicationRecord
   extend Enumerize
 
-  belongs_to :wallet_transaction
+  belongs_to :taskable, polymorphic: true
   belongs_to :wallet
 
-  enum event: { credit: 0, debit: 1 }
+  enumerize :transaction_type, in: %i[debit credit], default: :debit, scope: :shallow
 
-  validate :check_balance, on: :create
+  after_create :update_wallet
 
   private
 
-  def check_balance
+  def update_wallet
     wallet.with_lock do
-      if event.eql?('credit') && wallet.balance < amount.abs
-        errors.add(:base, "Transfer failed, Wallet balance is not enough!")
-      end
+      wallet.balance += amount
+      wallet.save
     end
   end
 end
