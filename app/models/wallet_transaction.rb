@@ -56,19 +56,16 @@ class WalletTransaction < ApplicationRecord
   end
 
   def process_transaction_report
-    report = TransactionReport.where(source_user_id: source_user.id, target_user_id: target_user.id)
+    report = TransactionReport.find_by_user_id(source_user.id)
     if report.present?
-      update_transaction_report(report.last)
+      update_transaction_report(report)
     else
       create_transaction_report
     end
   end
 
   def create_transaction_report
-    new_transaction = TransactionReport.create(
-      source_user_id: source_user.id, source_username: source_user.username,
-      target_user_id: target_user.id, target_username: target_user.username, amount: amount
-    )
+    new_transaction = TransactionReport.create(user_id: source_user.id, username: source_user.username, amount: amount)
 
     process_validation(new_transaction)
   end

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_08_21_142320) do
+ActiveRecord::Schema[7.0].define(version: 2023_08_21_171337) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -70,15 +70,12 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_21_142320) do
   end
 
   create_table "transaction_reports", force: :cascade do |t|
-    t.bigint "source_user_id"
-    t.string "source_username"
-    t.bigint "target_user_id"
-    t.string "target_username"
+    t.string "username"
     t.decimal "amount", precision: 20
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["source_user_id"], name: "index_transaction_reports_on_source_user_id"
-    t.index ["target_user_id"], name: "index_transaction_reports_on_target_user_id"
+    t.bigint "user_id"
+    t.index ["user_id"], name: "index_transaction_reports_on_user_id"
   end
 
   create_table "transfer_reports", force: :cascade do |t|

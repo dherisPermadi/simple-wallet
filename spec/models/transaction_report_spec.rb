@@ -6,9 +6,7 @@ RSpec.describe TransactionReport, type: :model do
   let(:target) { User.create(username: 'john') }
   subject {
     TransactionReport.new(
-      source_user_id: source.wallet.user_id, source_username: source.username,
-      target_user_id: target.id, target_username: target.username,
-      amount: 50000
+      user_id: source.wallet.user_id, username: source.username, amount: 50000
     )
   }
 
