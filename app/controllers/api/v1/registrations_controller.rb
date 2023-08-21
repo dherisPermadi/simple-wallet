@@ -6,7 +6,7 @@ module Api
         if @user.save
           @user.create_token
 
-          render json: @user, serializer: RegistrationSerializer
+          render json: @user, serializer: RegistrationSerializer, status: 201
         else
           render json: { response: 'Bad Request' }, status: 400
         end

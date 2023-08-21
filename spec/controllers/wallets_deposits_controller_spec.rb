@@ -11,9 +11,9 @@ RSpec.describe Api::V1::WalletDepositsController, type: :controller do
     end
 
     context 'create new wallet deposits' do
-      it "create should return 200" do
+      it "create should return 204" do
         post :create, params: { wallet_deposit: { amount: 100000 } }
-        expect(response).to have_http_status(:ok)
+        expect(response).to have_http_status(:no_content)
       end
 
       it "create should return 400 if amount is incorrect" do

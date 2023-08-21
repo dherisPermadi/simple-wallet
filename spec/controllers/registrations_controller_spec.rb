@@ -8,14 +8,14 @@ RSpec.describe Api::V1::RegistrationsController, type: :request do
       Doorkeeper::Application.create!(name: 'API Client', scopes: '')
     end
 
-    it "create should return 200" do
+    it "create should return 201" do
       post url, params: {
         registration: {
           username: 'mywallet'
         }
       }
 
-      expect(response).to have_http_status(:ok)
+      expect(response).to have_http_status(:created)
     end
 
     it "create should return 400 if error" do

@@ -2,7 +2,9 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable, :rememberable
 
   has_one :wallet, dependent: :destroy
-  has_many :wallet_transactions, as: :sourceable, dependent: :destroy
+  has_many :wallet_outs, class_name: "WalletTransaction", foreign_key: 'source_user_id', dependent: :destroy
+  has_many :wallet_ins, class_name: "WalletTransaction", foreign_key: 'target_user_id', dependent: :destroy
+
   has_many :access_grants, class_name: 'Doorkeeper::AccessGrant',
                            foreign_key: :resource_owner_id,
                            dependent: :delete_all # or :destroy if you need callbacks
