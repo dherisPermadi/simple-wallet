@@ -3,7 +3,7 @@ module Api
     class TransactionDetailsController < ApplicationController
       before_action :doorkeeper_authorize!
 
-      def top_transaction
+      def top_transactions
         user = current_user
         transactions = TransferReport.where("(source_user_id = ? AND transfer_type = 'out' ) OR (target_user_id = ? AND transfer_type = 'in')",
                                             user.id, user.id)
@@ -13,11 +13,8 @@ module Api
         render json: generate_collection_serializer(transactions, TransactionDetailSerializer)
       end
 
-      def top_overall
-        user = current_user
-        transactions = TransactionReport.where('source_user_id = ?', user.id)
-                                        .order(amount: :desc)
-                                        .limit(10)
+      def top_users
+        transactions = TransactionReport.order(amount: :desc).limit(10)
 
         render json: generate_collection_serializer(transactions, TransactionSerializer)
       end

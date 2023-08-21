@@ -16,8 +16,8 @@ Rails.application.routes.draw do
       resources :wallet_transactions, only: %i[create]
 
       get '/wallet/total_balance', to: 'wallets#total_balance', as: 'total_balance'
-      get '/transaction_detail/top_transaction', to: 'transaction_details#top_transaction', as: 'top_transaction'
-      get '/transaction_detail/top_overall', to: 'transaction_details#top_overall', as: 'top_overall'
+      get '/transaction_detail/top_transactions', to: 'transaction_details#top_transactions', as: 'top_transactions'
+      get '/transaction_detail/top_users', to: 'transaction_details#top_users', as: 'top_users'
     end
   end
 end
