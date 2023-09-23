@@ -1,5 +1,5 @@
 # README - Wallet (Simple E-Wallet)
-A Simple Wallet API that developd to fulfilled 6 endpoint API that needed to be created:
+A Simple Wallet API that developed to fulfilling 6 endpoint API that needed to be created:
   1. Register User
   2. Balance Read
   3. Balance Topup
